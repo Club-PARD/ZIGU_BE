@@ -61,15 +61,15 @@ public class PostService {
         postRepo.save(newPost);
     }
 
-    public void readPostBySchool(String schoolName){
-        // schoolName으로 School 찾고, id 따로 빼서 저장하기
-        Optional CurrentSchool = schoolRepo.findBySchoolName(schoolName);
-        // post 리스트 = findByschoolId
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-
-    }
+//    public void readPostBySchool(String schoolName){
+//        // schoolName으로 School 찾고, id 따로 빼서 저장하기
+//        Optional CurrentSchool = schoolRepo.findBySchoolName(schoolName);
+//        // post 리스트 = findByschoolId
+//        User user = userRepo.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//
+//    }
 
 
 }

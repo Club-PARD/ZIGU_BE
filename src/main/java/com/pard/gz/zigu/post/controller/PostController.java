@@ -30,7 +30,7 @@ public class PostController {
     // 현재 유저가 속한 대학교의 모든 게시물 get
     @GetMapping("/")
     public ResponseEntity<List<PostReadResDto>> readPostBySchool(@RequestParam String schoolName){
-        postService.readPostBySchool(schoolName);
+//        postService.readPostBySchool(schoolName);
         return ResponseEntity.ok().build();
     }
 }
