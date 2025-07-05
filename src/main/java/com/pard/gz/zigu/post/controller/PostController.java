@@ -1,7 +1,7 @@
 package com.pard.gz.zigu.post.controller;
 
 import com.pard.gz.zigu.post.dto.PostCreateReqDto;
-import com.pard.gz.zigu.post.dto.PostReadAllResDto;
+import com.pard.gz.zigu.post.dto.PostHomeResDto;
 import com.pard.gz.zigu.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +29,10 @@ public class PostController {
     }
 
     // 현재 유저가 속한 대학교의 모든 게시물 get
-    @GetMapping("/allPost")
-    public ResponseEntity<List<PostReadAllResDto>> readAllPost(@RequestParam Long userId){
-        postService.readAllbySchool(userId);
+    @GetMapping("/home")
+    public ResponseEntity<PostHomeResDto> readHomePosts(@RequestParam Long userId){
+        postService.readHomePosts(userId);
         return ResponseEntity.ok().build();
     }
+
 }

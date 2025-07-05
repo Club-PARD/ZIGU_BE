@@ -4,6 +4,8 @@ import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.Image.repository.ImageRepo;
 import com.pard.gz.zigu.Image.service.ImageStorageService;
 import com.pard.gz.zigu.post.dto.PostCreateReqDto;
+import com.pard.gz.zigu.post.dto.PostHomeResDto;
+import com.pard.gz.zigu.post.dto.PostPreviewDto;
 import com.pard.gz.zigu.post.entity.Post;
 import com.pard.gz.zigu.post.repository.PostRepo;
 import com.pard.gz.zigu.school.entity.School;
@@ -88,16 +90,31 @@ public class PostService {
     }
 
 
-    public void readAllbySchool(Long userId){
+    public PostHomeResDto readHomePosts(Long userId){
         // userId으로 School 찾고, id 따로 빼서 저장하기
-        Optional currnetUser = userRepo.findById(userId);
+        User currentUser = userRepo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다"));
+
+        // save first user's school
+        School userSchool = currentUser.getSchool();
+        // after save that school's name
+        String schoolName = userSchool.getSchoolName();
+
+        List<Post> posts = postRepo.findAllBySchool(userSchool);
+
+        // PostPreviewDto 정보 빌드
+        List<PostPreviewDto> postPreviewDtos = posts.stream().map(
+                post -> PostPreviewDto.builder()
+                        .build()).toList();
 
 
-        // post 리스트 = findByschoolId
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        PostHomeResDto postHomeResDto = PostHomeResDto.builder()
+                .schoolName(schoolName)
+                .posts(postPreviewDtos)
+                .build();
 
 
+        return postHomeResDto;
     }
 
 

@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Long> {
     boolean existsByStudentMail(String studentMail); // 해당 studentMail을 가진 user가 DB에 존재하는지
-    Optional<User> findById(Long usesrId);
 
 }
