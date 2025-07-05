@@ -25,13 +25,13 @@ public class PostCreateReqDto {
 //    private String caution;
     private List<MultipartFile> images = new ArrayList<>();
 
-    public Category getCategory(){
-        this.category = Category.ETC;
-        return this.category;
-    }
+//    public Category getCategory(){
+//        this.category = Category.ETC;
+//        return this.category;
+//    }
 
-    public IsBorrowable getIsBorrowable() {
-        this.isBorrowable = IsBorrowable.POSSIBLE;
-        return isBorrowable;
-    }
+//    public IsBorrowable getIsBorrowable() {
+//        this.isBorrowable = IsBorrowable.POSSIBLE;
+//        return isBorrowable;
+//    }
 }

@@ -46,7 +46,7 @@ public class Post {
     private List<Image> images = new ArrayList<>();
 
     // 카테고리
-    @Column(name = "category", nullable = false)
+    @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
 
