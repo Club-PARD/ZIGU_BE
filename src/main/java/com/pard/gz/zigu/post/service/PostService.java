@@ -90,7 +90,6 @@ public class PostService {
                 .pricePerHour(dto.getPricePerHour())
                 .pricePerDay(dto.getPricePerDay())
                 .description(dto.getDescription())
-                .caution(dto.getCaution())
                 .borrowedList(null)
                 .build();
 
