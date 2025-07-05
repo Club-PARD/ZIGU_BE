@@ -59,7 +59,7 @@ public class Post {
     private Long pricePerDay;
 
     // 상세 설명
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
     // 주의사항(체크리스트)
