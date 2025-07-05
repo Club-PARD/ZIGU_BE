@@ -23,7 +23,7 @@ public class PostCreateReqDto {
     private Long pricePerDay;
     private Category category;
     private String description;
-    private String caution;
+//    private String caution;
     @Builder.Default          // Lombok
     private List<MultipartFile> images = new ArrayList<>();
 

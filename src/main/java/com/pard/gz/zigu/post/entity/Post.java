@@ -63,8 +63,8 @@ public class Post {
     private String description;
 
     // 주의사항(체크리스트)
-    @Column(name = "caution", nullable = false)
-    private String caution;
+//    @Column(name = "caution", nullable = false)
+//    private String caution;
 
     // 어떤 학교의 게시물인지
     @ManyToOne
