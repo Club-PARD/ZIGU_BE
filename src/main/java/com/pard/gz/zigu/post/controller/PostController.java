@@ -22,7 +22,8 @@ public class PostController {
 //    }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestParam Long userId, @ModelAttribute PostCreateReqDto postCreateReqDto) throws IOException {
+    public ResponseEntity<?> create(@RequestParam Long userId, @ModelAttribute PostCreateReqDto postCreateReqDto)
+            throws IOException {
         postService.createPost(userId, postCreateReqDto);
         return ResponseEntity.ok().build();
     }

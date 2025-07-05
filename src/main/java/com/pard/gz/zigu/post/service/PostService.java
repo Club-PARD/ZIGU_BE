@@ -11,52 +11,88 @@ import com.pard.gz.zigu.school.repository.SchoolRepo;
 import com.pard.gz.zigu.user.entity.User;
 import com.pard.gz.zigu.user.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class PostService {
+    private final S3Client s3; // Bean
     private final UserRepo userRepo;
     private final PostRepo postRepo;
     private final SchoolRepo schoolRepo;
     private final ImageStorageService imageStorageService;
 
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
     @Transactional
-    public void createPost(Long userId, PostCreateReqDto postCreateReqDto) throws IOException {
+    public void createPost(Long userId, PostCreateReqDto dto) throws IOException {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // post 아이디 필요하니까 일단 생성
+        Post newPost = new Post();
 
+        // 2) 이미지들 S3 업로드
+        List<Image> imgs = new ArrayList<>();
 
-        Post newPost = Post.builder()
+        // 이미지 하나씩 꺼내서 암호화
+        for (MultipartFile mf : dto.getImages()) {
+            if (mf.isEmpty()) continue; // null 처리용
+
+            // (1) S3 key 생성
+            String uuid = UUID.randomUUID().toString(); // 파일 이름 중복 막기 위해 UUID 붙임
+            // "posts/게시글ID/랜덤이름_원래파일이름"
+            // key는 S3 내부에서 "파일의 정확한 위치"를 의미
+            String key  = "posts/" + newPost.getId() + "/" + uuid + "_" + mf.getOriginalFilename();
+
+            // (2) putObject
+
+            // PutObjectRequest -> S3에 사진 저장할 때 필요한 request 객체
+            PutObjectRequest req = PutObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(key) // 파일 저장 경로
+                    .contentType(mf.getContentType()) // 이미지 확장자 종류
+                    .acl(ObjectCannedACL.PRIVATE)      // 비공개
+                    .build();
+
+            // S3에 업로드
+//            mf.getInputStream() = 파일 내용
+//            mf.getSize() = 파일 크기
+            s3.putObject(req, RequestBody.fromInputStream(mf.getInputStream(), mf.getSize()));
+
+            // (3) Image 엔티티 생성
+            imgs.add(Image.builder()
+                    .s3Key(key)
+                    .post(newPost)
+                    .build());
+        }
+
+        newPost = Post.builder()
                 .writer(user)
-                .isBorrowable(postCreateReqDto.getIsBorrowable())
-                .itemName(postCreateReqDto.getItemName())
-                .category(postCreateReqDto.getCategory())
-                .pricePerHour(postCreateReqDto.getPricePerHour())
-                .pricePerDay(postCreateReqDto.getPricePerDay())
-                .description(postCreateReqDto.getDescription())
-                .caution(postCreateReqDto.getCaution())
+                .isBorrowable(dto.getIsBorrowable())
+                .itemName(dto.getItemName())
+                .images(imgs)
+                .category(dto.getCategory())
+                .pricePerHour(dto.getPricePerHour())
+                .pricePerDay(dto.getPricePerDay())
+                .description(dto.getDescription())
+                .caution(dto.getCaution())
                 .borrowedList(null)
                 .build();
-
-        // 2) 이미지들 루프 (최대 5장)
-        for (MultipartFile file : postCreateReqDto.getImages()) {
-            if (file.isEmpty()) continue;
-
-            // 2-1) 로컬 static/images/ 에 저장 → 경로 문자열 받기
-            String imageUrl = imageStorageService.store(file);
-
-            // 2-2) Post와 묶인 Image 엔티티 생성
-            Image image = new Image(imageUrl, newPost); // post_id FK는 JPA가 나중에 채움
-
-            new Image(imageUrl, newPost);  // ← 저장은 postRepo.save(post)로 한 방에
-        }
 
         postRepo.save(newPost);
     }

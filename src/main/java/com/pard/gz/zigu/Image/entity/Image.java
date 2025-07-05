@@ -19,9 +19,13 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // imade url
+    // imade url, *프론트에 넘겨줄 때 동적으로 암호화 후 reponse 해 줄 예정
     @Column(name = "imageUrl", nullable = false)
     private String imageUrl;
+
+    // image s3Key(for S3)
+    @Column(name = "s3Key", nullable = false)
+    private String s3Key;
 
     // 🔽 Image 입장에서: 어떤 게시물(Post)에 속하는지 가리킴 (N:1)
     @ManyToOne
@@ -32,7 +36,6 @@ public class Image {
     public Image(String imageUrl, Post post) {
         this.imageUrl = imageUrl;
         this.post = post;
-
         // == 연관관계 주인 쪽에서 역방향 컬렉션까지 완성 ==
         post.getImages().add(this);
     }
