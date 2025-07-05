@@ -1,6 +1,6 @@
 package com.pard.gz.zigu.user.controller;
 
-import com.pard.gz.zigu.user.dto.UserRegisterReqDto;
+import com.pard.gz.zigu.user.dto.UserSignUpReqDto;
 import com.pard.gz.zigu.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/signin")
-    public void registerUser(@RequestBody UserRegisterReqDto userRegisterReqDto){
-        userService.register(userRegisterReqDto);
-    }
 
 
 //    @GetMapping("/{userId}")

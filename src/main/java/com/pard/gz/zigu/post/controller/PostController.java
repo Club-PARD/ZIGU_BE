@@ -1,6 +1,7 @@
 package com.pard.gz.zigu.post.controller;
 
 import com.pard.gz.zigu.post.dto.PostCreateReqDto;
+import com.pard.gz.zigu.post.dto.PostDetailResDto;
 import com.pard.gz.zigu.post.dto.PostHomeResDto;
 import com.pard.gz.zigu.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,6 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
-//    @PostMapping("/create")
-//    public void createPost(@RequestParam Long userId, @RequestBody PostCreateReqDto postCreateReqDto){
-//        postService.createPost(userId, postCreateReqDto);
-//    }
-
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestParam Long userId, @ModelAttribute PostCreateReqDto postCreateReqDto)
             throws IOException {
@@ -32,6 +28,12 @@ public class PostController {
     @GetMapping("/home")
     public ResponseEntity<PostHomeResDto> readHomePosts(@RequestParam Long userId){
         postService.readHomePosts(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<PostDetailResDto> readDetailPost(@RequestParam Long postId){
+        postService.readDetailPost(postId);
         return ResponseEntity.ok().build();
     }
 

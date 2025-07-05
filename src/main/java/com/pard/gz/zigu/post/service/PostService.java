@@ -4,6 +4,7 @@ import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.Image.repository.ImageRepo;
 import com.pard.gz.zigu.Image.service.ImageStorageService;
 import com.pard.gz.zigu.post.dto.PostCreateReqDto;
+import com.pard.gz.zigu.post.dto.PostDetailResDto;
 import com.pard.gz.zigu.post.dto.PostHomeResDto;
 import com.pard.gz.zigu.post.dto.PostPreviewDto;
 import com.pard.gz.zigu.post.entity.Post;
@@ -89,7 +90,7 @@ public class PostService {
         postRepo.save(newPost);
     }
 
-
+    // User 소속 학교의 모든 게시물(preview) 홈으로 불러오기
     public PostHomeResDto readHomePosts(Long userId){
         // userId으로 School 찾고, id 따로 빼서 저장하기
         User currentUser = userRepo.findById(userId)
@@ -103,9 +104,27 @@ public class PostService {
         List<Post> posts = postRepo.findAllBySchool(userSchool);
 
         // PostPreviewDto 정보 빌드
-        List<PostPreviewDto> postPreviewDtos = posts.stream().map(
-                post -> PostPreviewDto.builder()
-                        .build()).toList();
+        // Post → PostPreviewDto  변환
+        List<PostPreviewDto> postPreviewDtos = posts.stream()
+                .map(post -> {
+
+                    // 1) 첫 번째 이미지 뽑기 (없으면 null)
+                    Image firstImage = post.getImages()
+                            .stream()
+                            .findFirst()        // Optional<Image>
+                            .orElse(null);      // 비어 있으면 null
+
+                    // 2) DTO 빌드
+                    return PostPreviewDto.builder()
+                            .post_id(post.getId())
+                            .post_fir_Image(firstImage)
+                            .itemName(post.getItemName())
+                            .category(post.getCategory())
+                            .price_per_hour(post.getPricePerHour())
+                            .price_per_day(post.getPricePerDay())
+                            .build();
+                })
+                .toList();
 
 
         PostHomeResDto postHomeResDto = PostHomeResDto.builder()
@@ -117,5 +136,20 @@ public class PostService {
         return postHomeResDto;
     }
 
+    // 상세페이지
+    public PostDetailResDto readDetailPost(Long postId){
 
+        Post currentPost = postRepo.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다"));
+
+        PostDetailResDto postDetailResDto = PostDetailResDto.builder()
+                .images(currentPost.getImages())
+                .price_per_day(currentPost.getPricePerDay())
+                .price_per_hour(currentPost.getPricePerHour())
+                .description(currentPost.getDescription())
+                .category(currentPost.getCategory())
+                .build();
+
+        return postDetailResDto;
+    }
 }
