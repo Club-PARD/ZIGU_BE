@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PostCreateReqDto {
     private IsBorrowable isBorrowable;
     private String itemName;
@@ -24,7 +25,7 @@ public class PostCreateReqDto {
     private String description;
     private String caution;
     @Builder.Default          // Lombok
-    private List<MultipartFile> images;
+    private List<MultipartFile> images = new ArrayList<>();
 
     public Category getCategory(){
         this.category = Category.ETC;

@@ -99,7 +99,8 @@ public class PostService {
 
     public void readAllbySchool(Long userId){
         // userId으로 School 찾고, id 따로 빼서 저장하기
-        School school = schoolRepo.findByUserId(userId);
+        Optional currnetUser = userRepo.findById(userId);
+//        School school = schoolRepo.findByUserId(userId);
 
 
         // post 리스트 = findByschoolId
