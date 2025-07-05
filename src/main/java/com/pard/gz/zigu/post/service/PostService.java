@@ -40,66 +40,57 @@ public class PostService {
 
     @Transactional
     public void createPost(Long userId, PostCreateReqDto dto) throws IOException {
+
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // post 아이디 필요하니까 일단 생성
-        Post newPost = new Post();
-
-        // 2) 이미지들 S3 업로드
-        List<Image> imgs = new ArrayList<>();
-
-        // 이미지 하나씩 꺼내서 암호화
-        for (MultipartFile mf : dto.getImages()) {
-            if (mf.isEmpty()) continue; // null 처리용
-
-            // (1) S3 key 생성
-            String uuid = UUID.randomUUID().toString(); // 파일 이름 중복 막기 위해 UUID 붙임
-            // "posts/게시글ID/랜덤이름_원래파일이름"
-            // key는 S3 내부에서 "파일의 정확한 위치"를 의미
-            String key  = "posts/" + newPost.getId() + "/" + uuid + "_" + mf.getOriginalFilename();
-
-            // (2) putObject
-
-            // PutObjectRequest -> S3에 사진 저장할 때 필요한 request 객체
-            PutObjectRequest req = PutObjectRequest.builder()
-                    .bucket(bucket)
-                    .key(key) // 파일 저장 경로
-                    .contentType(mf.getContentType()) // 이미지 확장자 종류
-                    .acl(ObjectCannedACL.PRIVATE)      // 비공개
-                    .build();
-
-            // S3에 업로드
-//            mf.getInputStream() = 파일 내용
-//            mf.getSize() = 파일 크기
-            s3.putObject(req, RequestBody.fromInputStream(mf.getInputStream(), mf.getSize()));
-
-            // (3) Image 엔티티 생성
-            imgs.add(Image.builder()
-                    .s3Key(key)
-                    .post(newPost)
-                    .build());
-        }
-
-        newPost = Post.builder()
+        /* 1️⃣  Post 껍데기 먼저 만든다 ― images 는 비어있는 ArrayList 로 초기화 */
+        Post newPost = Post.builder()
                 .writer(user)
                 .isBorrowable(dto.getIsBorrowable())
                 .itemName(dto.getItemName())
-                .images(imgs)
                 .category(dto.getCategory())
                 .pricePerHour(dto.getPricePerHour())
                 .pricePerDay(dto.getPricePerDay())
                 .description(dto.getDescription())
-                .borrowedList(null)
+                .images(new ArrayList<>())   // ←★ 빈 리스트 주입
                 .build();
 
+        /* 2️⃣  MultipartFile 리스트 준비 */
+        List<MultipartFile> files = dto.getImages() == null ? List.of() : dto.getImages();
+
+        /* 3️⃣  하나씩 S3 업로드 → Image 엔티티 생성 → Post.images 에 add */
+        for (MultipartFile mf : files) {
+            if (mf.isEmpty()) continue;
+
+            // S3 key – Post ID 안 쓰고 UUID/타임스탬프 등으로 폴더 구성
+            String key = "posts/" + UUID.randomUUID() + "_" + mf.getOriginalFilename();
+
+            PutObjectRequest req = PutObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(key)
+                    .contentType(mf.getContentType())
+                    .acl(ObjectCannedACL.PRIVATE)
+                    .build();
+            s3.putObject(req, RequestBody.fromInputStream(mf.getInputStream(), mf.getSize()));
+
+            // Image 엔티티
+            Image img = Image.builder()
+                    .s3Key(key)
+                    .post(newPost)     // 양방향 연결
+                    .build();
+
+            newPost.getImages().add(img);      // ←★ setter 없이도 가능
+        }
+
+        /* 4️⃣  저장 */
         postRepo.save(newPost);
     }
+
 
     public void readAllbySchool(Long userId){
         // userId으로 School 찾고, id 따로 빼서 저장하기
         Optional currnetUser = userRepo.findById(userId);
-//        School school = schoolRepo.findByUserId(userId);
 
 
         // post 리스트 = findByschoolId
