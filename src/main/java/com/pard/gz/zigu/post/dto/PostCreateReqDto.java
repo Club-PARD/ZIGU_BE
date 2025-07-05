@@ -4,6 +4,7 @@ import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.post.entity.enums.Category;
 import com.pard.gz.zigu.post.entity.enums.IsBorrowable;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ public class PostCreateReqDto {
     private Category category;
     private String description;
     private String caution;
+    @Builder.Default          // Lombok
     private List<MultipartFile> images;
 
     public Category getCategory(){

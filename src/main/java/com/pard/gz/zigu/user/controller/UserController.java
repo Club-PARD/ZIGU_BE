@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/success")
+    @PostMapping("/signin")
     public void registerUser(@RequestBody UserRegisterReqDto userRegisterReqDto){
         userService.register(userRegisterReqDto);
     }
+
 
 //    @GetMapping("/{userId}")
 //    public UserResDto.ReadUser getUser(@PathVariable Long userId) {

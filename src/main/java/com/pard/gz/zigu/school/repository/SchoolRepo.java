@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SchoolRepo extends JpaRepository<School, Long> {
-    Optional<School> findBySchoolName(String schoolName);
+    School findByUserId(Long userId);
 //    List<Post>
 }
