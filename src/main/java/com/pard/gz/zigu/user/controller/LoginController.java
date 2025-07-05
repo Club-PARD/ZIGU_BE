@@ -2,6 +2,7 @@ package com.pard.gz.zigu.user.controller;
 
 import com.pard.gz.zigu.user.dto.UserSignUpReqDto;
 import com.pard.gz.zigu.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final UserService userService;
 
-    @PostMapping("/signin")
+    @Operation(summary = "회원가입")
+    @PostMapping("/signUp")
     public ResponseEntity<Void> signUp(@RequestBody UserSignUpReqDto userSignUpReqDto){
         userService.signUpUser(userSignUpReqDto);
         return ResponseEntity.ok().build();
