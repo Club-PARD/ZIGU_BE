@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ImagePathReqDto {
     private Post post;
-    private String imageUrl;
+    private String s3Key;
 }

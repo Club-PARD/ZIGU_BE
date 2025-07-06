@@ -21,7 +21,6 @@ public class PostCreateReqDto {
     private Long pricePerDay;
     private Category category;
     private String description;
-//    private String caution;
     private List<MultipartFile> images = new ArrayList<>();
 
 //    public Category getCategory(){

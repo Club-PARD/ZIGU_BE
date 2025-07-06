@@ -20,8 +20,8 @@ public class Image {
     private Long id;
 
     // imade url, *프론트에 넘겨줄 때 동적으로 암호화 후 reponse 해 줄 예정
-    @Column(name = "imageUrl", nullable = false)
-    private String imageUrl;
+//    @Column(name = "imageUrl", nullable = false)
+//    private String imageUrl;
 
     // image s3Key(for S3)
     @Column(name = "s3Key", nullable = false)
@@ -33,8 +33,8 @@ public class Image {
     private Post post;
 
     // 생성자 통해 세팅
-    public Image(String imageUrl, Post post) {
-        this.imageUrl = imageUrl;
+    public Image(String s3Key, Post post) {
+        this.s3Key = s3Key;
         this.post = post;
         // == 연관관계 주인 쪽에서 역방향 컬렉션까지 완성 ==
         post.getImages().add(this);

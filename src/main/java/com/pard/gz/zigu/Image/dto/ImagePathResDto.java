@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImagePathResDto {
-    private String imageUrl;
+    private String s3Key;
 }
