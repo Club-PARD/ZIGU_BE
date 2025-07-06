@@ -47,13 +47,14 @@ public class PostService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        School userSchool = user.getSchool();
         /* 1️⃣  Post 껍데기 먼저 만든다 ― images 는 비어있는 ArrayList 로 초기화 */
         Post newPost = Post.builder()
                 .writer(user)
                 .isBorrowable(dto.getIsBorrowable())
                 .itemName(dto.getItemName())
                 .category(dto.getCategory())
-                .school(dto.getSchool())
+                .school(userSchool)
                 .pricePerHour(dto.getPricePerHour())
                 .pricePerDay(dto.getPricePerDay())
                 .description(dto.getDescription())

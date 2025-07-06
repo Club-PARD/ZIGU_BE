@@ -23,7 +23,6 @@ public class PostCreateReqDto {
     private String description;
 //    private String caution;
     private List<MultipartFile> images = new ArrayList<>();
-    private School school;
 
 //    public Category getCategory(){
 //        this.category = Category.ETC;
