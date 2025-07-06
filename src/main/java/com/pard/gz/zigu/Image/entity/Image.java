@@ -19,10 +19,6 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // imade url, *프론트에 넘겨줄 때 동적으로 암호화 후 reponse 해 줄 예정
-//    @Column(name = "imageUrl", nullable = false)
-//    private String imageUrl;
-
     // image s3Key(for S3)
     @Column(name = "s3Key", nullable = false)
     private String s3Key;
