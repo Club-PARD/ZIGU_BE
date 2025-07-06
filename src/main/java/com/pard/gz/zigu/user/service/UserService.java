@@ -25,10 +25,14 @@ public class UserService {
     public void signUpUser(UserSignUpReqDto userSignUpReqDto) {
 
         System.out.println(userSignUpReqDto.getStudentMail());
-        // 이미 가입되어 있는 메일인지 확인
-        if (userRepo.existsByStudentMail(userSignUpReqDto.getStudentMail()))
-            throw new IllegalStateException("이미 가입된 메일입니다");
 
+        boolean exists = userRepo.existsByStudentMail(userSignUpReqDto.getStudentMail());
+        System.out.println("exists = " + exists);
+        // 이미 가입되어 있는 메일인지 확인
+//        if (userRepo.existsByStudentMail(userSignUpReqDto.getStudentMail()))
+//            throw new IllegalStateException("이미 가입된 메일입니다");
+//        else
+//            ;
 
 
         // 2) 학교 엔티티 확보 (찾거나 생성)

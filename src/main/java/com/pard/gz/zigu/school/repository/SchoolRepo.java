@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SchoolRepo extends JpaRepository<School, Long> {
 //    School findSchoolByUser(User user);
     Optional<School> findBySchoolName(String SchoolName);
-    boolean existsBySchoolName(String SchoolName);
+//    boolean existsBySchoolName(String SchoolName);
 
 //    School findBySchoolName(String SchoolName);
 //    List<Post>
