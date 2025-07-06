@@ -1,5 +1,6 @@
 package com.pard.gz.zigu.user.controller;
 
+import com.pard.gz.zigu.commonDto.ApiResponse;
 import com.pard.gz.zigu.user.dto.UserSignUpReqDto;
 import com.pard.gz.zigu.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,9 +19,9 @@ public class LoginController {
 
     @Operation(summary = "회원가입")
     @PostMapping("/signUp")
-    public ResponseEntity<Void> signUp(@RequestBody UserSignUpReqDto userSignUpReqDto){
+    public ResponseEntity<ApiResponse<Void>> signUp(@RequestBody UserSignUpReqDto userSignUpReqDto){
         userService.signUpUser(userSignUpReqDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new ApiResponse<>(true, "회원가입 성공", null));
     }
 
 }
