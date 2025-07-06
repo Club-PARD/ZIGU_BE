@@ -24,7 +24,7 @@ public class PostController {
     public ResponseEntity<ApiResponse<Void>> create(@RequestParam Long userId, @ModelAttribute PostCreateReqDto postCreateReqDto)
             throws IOException {
         postService.createPost(userId, postCreateReqDto);
-        return ResponseEntity.ok(new ApiResponse<>(true, "회원가입 성공", null));
+        return ResponseEntity.ok(new ApiResponse<>(true, "새 게시글 등록 성공띠띠", null));
     }
 
     // 현재 유저가 속한 대학교의 모든 게시물 get
