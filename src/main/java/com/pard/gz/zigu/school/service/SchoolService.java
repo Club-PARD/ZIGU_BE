@@ -17,8 +17,13 @@ public class SchoolService {
     @Transactional
     public School findOrCreateByName(String name) {
 
-        return schoolRepo.findBySchoolName(name)
+        System.out.println("찾을 학교 이름 : "+name);
+
+        School userSchool = schoolRepo.findBySchoolName(name)
                 .orElseGet(() -> schoolRepo.save(new School(name)));
+
+        System.out.println("최종 학교 이름 : "+ userSchool.getSchoolName());
+        return userSchool;
     }
 
 }
