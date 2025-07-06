@@ -53,6 +53,7 @@ public class PostService {
                 .isBorrowable(dto.getIsBorrowable())
                 .itemName(dto.getItemName())
                 .category(dto.getCategory())
+                .school(dto.getSchool())
                 .pricePerHour(dto.getPricePerHour())
                 .pricePerDay(dto.getPricePerDay())
                 .description(dto.getDescription())

@@ -3,6 +3,7 @@ package com.pard.gz.zigu.post.dto;
 import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.post.entity.enums.Category;
 import com.pard.gz.zigu.post.entity.enums.IsBorrowable;
+import com.pard.gz.zigu.school.entity.School;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,7 @@ public class PostCreateReqDto {
     private String description;
 //    private String caution;
     private List<MultipartFile> images = new ArrayList<>();
+    private School school;
 
 //    public Category getCategory(){
 //        this.category = Category.ETC;
