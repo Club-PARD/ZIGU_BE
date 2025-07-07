@@ -29,11 +29,16 @@ public class Borrowed {
     private User borrower;
 
     // + 기간
+    @Column(name = "peroid")
     private String peroid;
 
     // 기간 단위? (일 단위로 빌리는지, 시간 단위로 빌리는지의 정보)
+    @Column(name = "unitOfPeroid")
     @Enumerated(EnumType.STRING)
     private UnitOfPeroid unitOfPeroid;
+
+    @Column(name = "price")
+    private Long price;
 
     @Column(name = "borrowStatus")
     @Enumerated(EnumType.STRING)

@@ -2,7 +2,7 @@ package com.pard.gz.zigu.user.service;
 
 import com.pard.gz.zigu.config.security.CustomUserDetails;
 import com.pard.gz.zigu.user.dto.LoginReqDto;
-import com.pard.gz.zigu.user.dto.UserIdResDto;
+import com.pard.gz.zigu.user.dto.UserSucInfoResDto;
 import com.pard.gz.zigu.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class LoginService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public UserIdResDto login(LoginReqDto loginReqDto, HttpServletRequest request) {
+    public UserSucInfoResDto login(LoginReqDto loginReqDto, HttpServletRequest request) {
         try {
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(
@@ -43,8 +43,9 @@ public class LoginService {
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
             User hiUser = userDetails.getUser();
 
-            return UserIdResDto.builder()
+            return UserSucInfoResDto.builder()
                     .userId(hiUser.getId())
+                    .nickname(hiUser.getNickname())
                     .build();
 
         } catch (BadCredentialsException e) {

@@ -128,6 +128,7 @@ public class PostService {
 
 
         PostHomeResDto postHomeResDto = PostHomeResDto.builder()
+                .userId(currentUser.getId())
                 .schoolName(schoolName)
                 .posts(postPreviewDtos)
                 .build();

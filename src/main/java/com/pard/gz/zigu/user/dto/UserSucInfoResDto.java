@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserIdResDto {
+public class UserSucInfoResDto { // 로그인 성공 직후 front가 필요한 거
     private Long userId;
+    private String nickname;
 }
