@@ -9,6 +9,7 @@ import com.pard.gz.zigu.user.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepo userRepo;
     private final SchoolRepo schoolRepo;
     private final SchoolService schoolService;
@@ -38,14 +39,13 @@ public class UserService {
         // 2) 학교 엔티티 확보 (찾거나 생성)
         School school = schoolService.findOrCreateByName(userSignUpReqDto.getSchoolName());
 
-//        String encodedPw = passwordEncoder.encode(userRegisterReqDto.getPassword()); // 해시화
+        String encodedPw = passwordEncoder.encode(userSignUpReqDto.getPassword()); // 해시화
 
         System.out.println(school.getSchoolName());
 
         User newUser = User.builder()
                 .nickname(userSignUpReqDto.getNickname())
-//                .password(encodedPw)
-                .password(userSignUpReqDto.getPassword())
+                .password(encodedPw)
                 .school(school)
                 .studentMail(userSignUpReqDto.getStudentMail())
                 .postList(null)

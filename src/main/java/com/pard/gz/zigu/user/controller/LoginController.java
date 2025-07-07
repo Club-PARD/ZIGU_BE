@@ -43,7 +43,6 @@ public class LoginController {
             @Valid @RequestBody LoginReqDto dto,
             HttpServletRequest request
     ) {
-        loginService.login(dto, request);
         try {
             loginService.login(dto, request);
             return ResponseEntity.ok(ApiResponse.success("로그인 성공"));
