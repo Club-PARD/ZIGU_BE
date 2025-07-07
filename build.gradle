@@ -1,8 +1,11 @@
+
+
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.5.3'
-	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springframework.boot' version '3.2.5'
+	id 'io.spring.dependency-management' version '1.1.4'
 }
+
 
 group = 'com.pard.gz'
 version = '0.0.1-SNAPSHOT'
@@ -19,6 +22,7 @@ configurations {
 	}
 }
 
+
 repositories {
 	mavenCentral()
 }
@@ -26,7 +30,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.session:spring-session-core'
@@ -39,11 +43,13 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
 
 	// S3 Client
 	implementation platform("software.amazon.awssdk:bom:2.25.28")
 	implementation "software.amazon.awssdk:s3"
+
 
 }
 

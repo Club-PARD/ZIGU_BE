@@ -64,7 +64,7 @@ public class PostService {
         /* 2️⃣  MultipartFile 리스트 준비 */
         List<MultipartFile> files = dto.getImages() == null ? List.of() : dto.getImages();
 
-        /* 3️⃣  하나씩 S3 업로드 → Image 엔티티 생성 → Post.images 에 add */
+        /* 3 하나씩 S3 업로드 → Image 엔티티 생성 → Post.images 에 add */
         for (MultipartFile mf : files) {
             if (mf.isEmpty()) continue;
 
