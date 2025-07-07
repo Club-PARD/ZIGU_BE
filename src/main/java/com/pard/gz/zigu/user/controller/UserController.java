@@ -2,6 +2,7 @@ package com.pard.gz.zigu.user.controller;
 
 import com.pard.gz.zigu.user.dto.UserSignUpReqDto;
 import com.pard.gz.zigu.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-
-
-//    @GetMapping("/{userId}")
-//    public UserResDto.ReadUser getUser(@PathVariable Long userId) {
-//        return userService.readUser(userId);
-//    }
-
+    // TODO : 여기서부터 구현
+//    @Operation(summary = "내가 올린 물품", description = "현재 로그인 한 user가 올린 모든 게시글 불러오기")
+//    @GetMapping("/mypost")
+//    public
 
 
 }
