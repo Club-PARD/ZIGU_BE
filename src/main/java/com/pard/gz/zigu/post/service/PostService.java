@@ -143,7 +143,9 @@ public class PostService {
         Post currentPost = postRepo.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다"));
 
+        User writer = currentPost.getWriter();  // 게시글 작성한 사용자
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
+                .user_id(writer.getId())
                 .post_id(currentPost.getId())
                 .images(currentPost.getImages())
                 .price_per_day(currentPost.getPricePerDay())
