@@ -1,6 +1,7 @@
 package com.pard.gz.zigu.borrowed.entity;
 
 import com.pard.gz.zigu.borrowed.entity.enums.BorrowStatus;
+import com.pard.gz.zigu.borrowed.entity.enums.UnitOfPeroid;
 import com.pard.gz.zigu.post.entity.Post;
 import com.pard.gz.zigu.user.entity.User;
 import jakarta.persistence.*;
@@ -28,7 +29,11 @@ public class Borrowed {
     private User borrower;
 
     // + 기간
-    String
+    private String peroid;
+
+    // 기간 단위? (일 단위로 빌리는지, 시간 단위로 빌리는지의 정보)
+    @Enumerated(EnumType.STRING)
+    private UnitOfPeroid unitOfPeroid;
 
     @Column(name = "borrowStatus")
     @Enumerated(EnumType.STRING)
