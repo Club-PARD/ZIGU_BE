@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDetailResDto {
+    private Long post_id;
     private List<Image> images = new ArrayList<>();
     private Long price_per_hour;
     private Long price_per_day;
@@ -22,4 +23,3 @@ public class PostDetailResDto {
     private Category category;
 }
 
-// 잠만 프리뷰 게시글 첫번째 이미지 하나만 해야하잖아

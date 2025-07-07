@@ -3,7 +3,9 @@ package com.pard.gz.zigu.user.controller;
 import com.pard.gz.zigu.config.security.CustomUserDetails;
 import com.pard.gz.zigu.responseDto.ApiResponse;
 import com.pard.gz.zigu.user.dto.LoginReqDto;
+import com.pard.gz.zigu.user.dto.UserIdResDto;
 import com.pard.gz.zigu.user.dto.UserSignUpReqDto;
+import com.pard.gz.zigu.user.entity.User;
 import com.pard.gz.zigu.user.service.LoginService;
 import com.pard.gz.zigu.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,13 +41,13 @@ public class LoginController {
     /** 로그인 */
     @Operation(summary = "로긘")
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(
+    public ResponseEntity<ApiResponse<UserIdResDto>> login(
             @Valid @RequestBody LoginReqDto dto,
             HttpServletRequest request
     ) {
         try {
-            loginService.login(dto, request);
-            return ResponseEntity.ok(ApiResponse.success("로그인 성공"));
+            UserIdResDto hiUser = loginService.login(dto, request);
+            return ResponseEntity.ok(ApiResponse.success(hiUser));
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(ApiResponse.fail(e.getMessage()));
         }

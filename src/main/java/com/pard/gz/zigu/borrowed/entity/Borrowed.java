@@ -27,6 +27,9 @@ public class Borrowed {
     @JoinColumn(name = "borrowed_id")
     private User borrower;
 
+    // + 기간
+    String
+
     @Column(name = "borrowStatus")
     @Enumerated(EnumType.STRING)
     private BorrowStatus borrowStatus;

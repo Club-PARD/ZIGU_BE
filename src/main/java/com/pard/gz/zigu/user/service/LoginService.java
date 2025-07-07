@@ -2,6 +2,7 @@ package com.pard.gz.zigu.user.service;
 
 import com.pard.gz.zigu.config.security.CustomUserDetails;
 import com.pard.gz.zigu.user.dto.LoginReqDto;
+import com.pard.gz.zigu.user.dto.UserIdResDto;
 import com.pard.gz.zigu.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class LoginService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public User login(LoginReqDto loginReqDto, HttpServletRequest request) {
+    public UserIdResDto login(LoginReqDto loginReqDto, HttpServletRequest request) {
         try {
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(
@@ -40,7 +41,11 @@ public class LoginService {
 
             // 인증된 principal에서 User 객체 꺼내기
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            return userDetails.getUser();
+            User hiUser = userDetails.getUser();
+
+            return UserIdResDto.builder()
+                    .userId(hiUser.getId())
+                    .build();
 
         } catch (BadCredentialsException e) {
             throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다.");

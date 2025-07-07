@@ -108,9 +108,7 @@ public class PostService {
         // PostPreviewDto 정보 빌드
         // Post → PostPreviewDto  변환
         List<PostPreviewDto> postPreviewDtos = posts.stream()
-                .map(post -> {
-
-                    // 1) 첫 번째 이미지 뽑기 (없으면 null)
+                .map(post -> {// 1) 첫 번째 이미지 뽑기 (없으면 null)
                     Image firstImage = post.getImages()
                             .stream()
                             .findFirst()        // Optional<Image>
@@ -145,6 +143,7 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다"));
 
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
+                .post_id(currentPost.getId())
                 .images(currentPost.getImages())
                 .price_per_day(currentPost.getPricePerDay())
                 .price_per_hour(currentPost.getPricePerHour())
