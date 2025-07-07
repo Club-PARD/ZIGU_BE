@@ -1,16 +1,19 @@
 package com.pard.gz.zigu.apply.controller;
 
+import com.pard.gz.zigu.apply.dto.ApplyListResDto;
 import com.pard.gz.zigu.apply.dto.ApplySaveReqDto;
 import com.pard.gz.zigu.apply.repository.ApplyRepo;
 import com.pard.gz.zigu.apply.service.ApplyService;
+import com.pard.gz.zigu.config.security.CustomUserDetails;
 import com.pard.gz.zigu.responseDto.ApiResponse;
+import com.pard.gz.zigu.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,4 +29,30 @@ public class ApplyController {
         applyService.createApply(applySaveReqDto);
         return ResponseEntity.ok(new ApiResponse<>(200, true, "신청서 저장 성공", null));
     }
+
+
+    @Operation(summary = "신청서 조회(신청 내역 조회)", description = "게시한 대여물품으로 온 신청 내역 조회")
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<ApplyListResDto>>> readMyApplyList(
+            @AuthenticationPrincipal CustomUserDetails user) {
+
+        User currentUser = user.getUser();
+        List<ApplyListResDto> dto = applyService.getMyApplyList(currentUser);
+        return ResponseEntity.ok(ApiResponse.success(dto));
+    }
+
+    @Operation(summary = "신청 수락", description = "게시한 대여물품으로 온 신청 하나 수락")
+    @DeleteMapping("/ok")
+    public ResponseEntity<ApiResponse<List<Void>>> acceptApply(Long applyId){
+        applyService.acceptApply(applyId);
+        return ResponseEntity.ok(new ApiResponse<>(200, true, "신청 수락 성공", null));
+    }
+
+    @Operation(summary = "신청 거절", description = "게시한 대여물품으로 온 신청 거절")
+    @DeleteMapping("/no")
+    public ResponseEntity<ApiResponse<List<Void>>> rejectApply(Long applyId){
+        applyService.rejectApply(applyId);
+        return ResponseEntity.ok(new ApiResponse<>(200, true, "신청 거절 성공", null));
+    }
+
 }

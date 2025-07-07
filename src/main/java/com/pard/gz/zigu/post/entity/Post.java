@@ -37,6 +37,14 @@ public class Post {
     @Enumerated(EnumType.STRING)
     private IsBorrowable isBorrowable;
 
+    public void updateImpossible(){
+        this.isBorrowable = IsBorrowable.IMPOSSIBLE;
+    }
+
+    public void updatePossible(){
+        this.isBorrowable = IsBorrowable.POSSIBLE;
+    }
+
     // 물품 이름
     @Column(name = "item_name", nullable = false)
     private String itemName;

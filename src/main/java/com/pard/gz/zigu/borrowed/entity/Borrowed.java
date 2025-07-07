@@ -30,7 +30,7 @@ public class Borrowed {
 
     // + 기간
     @Column(name = "peroid")
-    private String peroid;
+    private Long peroid;
 
     // 기간 단위? (일 단위로 빌리는지, 시간 단위로 빌리는지의 정보)
     @Column(name = "unitOfPeroid")
@@ -44,4 +44,11 @@ public class Borrowed {
     @Enumerated(EnumType.STRING)
     private BorrowStatus borrowStatus;
 
+    public void updateToBORROWED() {
+        this.borrowStatus = BorrowStatus.BORROWED;
+    }
+
+    public void updateToRETURN() {
+        this.borrowStatus = BorrowStatus.RETURNED;
+    }
 }
