@@ -34,10 +34,11 @@ public class BorrowedService {
             Post post = borrowed.getPost();
             List<Image> images = post.getImages(); // 연관관계 설정되어 있어야 함
             String firstImageUrl = images.isEmpty() ? null : images.get(0).getS3Key(); // 또는 getPath()
+            String imageUrl = "https://gz-zigu.store/" + firstImageUrl;
 
             return BorrInfoResDto.builder()
                     .borrowedId(borrowed.getId())
-                    .firstImageUrl(firstImageUrl)
+                    .firstImageUrl(imageUrl)
                     .itemName(post.getItemName())
                     .pricePerDay(post.getPricePerDay())
                     .pricePerHour(post.getPricePerHour())
@@ -59,10 +60,12 @@ public class BorrowedService {
                         .map(borrowed -> {
                             List<Image> images = post.getImages();
                             String firstImageUrl = images.isEmpty() ? null : images.get(0).getS3Key();
+                            String imageUrl = "https://gz-zigu.store/" + firstImageUrl;
+
 
                             return BorrInfoResDto.builder()
                                     .borrowedId(borrowed.getId())
-                                    .firstImageUrl(firstImageUrl)
+                                    .firstImageUrl(imageUrl)
                                     .itemName(post.getItemName())
                                     .pricePerDay(post.getPricePerDay())
                                     .pricePerHour(post.getPricePerHour())

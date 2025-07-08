@@ -61,11 +61,13 @@ public class ApplyService {
             List<Image> imageList = imageRepo.findByPost(post);     // 3. 해당 글의 이미지 리스트
 
             String firstImageUrl = imageList.isEmpty() ? null : imageList.get(0).getS3Key();
+            String imageUrl = "https://gz-zigu.store/" + firstImageUrl;
+
 
             List<ApplyListResDto.ApplyInfo> applyInfoList = applyList.stream()
                     .map(apply -> ApplyListResDto.ApplyInfo.builder()
                             .applierNickname(apply.getApplier().getNickname())
-                            .firstImageUrl(firstImageUrl)
+                            .firstImageUrl(imageUrl)
                             .period(apply.getPeroid())
                             .unitOfPeriod(apply.getUnitOfPeroid())
                             .totalPrice(apply.getTotalPrice())

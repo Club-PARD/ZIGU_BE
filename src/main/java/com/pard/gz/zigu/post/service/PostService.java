@@ -116,11 +116,12 @@ public class PostService {
                             .findFirst()        // Optional<Image>
                             .orElse(null);      // 비어 있으면 null
 
+                    String imageUrl = "https://gz-zigu.store/" + firstImage.getS3Key();
                     // 2) DTO 빌드
                     assert firstImage != null;
                     return PostPreviewDto.builder()
                             .post_id(post.getId())
-                            .firstImageUrl(firstImage.getS3Key())
+                            .firstImageUrl(imageUrl)
                             .itemName(post.getItemName())
                             .category(post.getCategory())
                             .price_per_hour(post.getPricePerHour())
@@ -136,7 +137,6 @@ public class PostService {
                 .posts(postPreviewDtos)
                 .build();
 
-
         return postHomeResDto;
     }
 
@@ -151,9 +151,11 @@ public class PostService {
         List<Image> images = currentPost.getImages();
 
         List<String> imageUrls = images.stream()
-                .map(Image::getS3Key)
+                .map(image -> "https://gz-zigu.store/" + image.getS3Key())
                 .collect(Collectors.toList());
 
+
+        System.out.println("이미지 이름");
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
                 .user_id(writer.getId())
                 .post_id(currentPost.getId())
