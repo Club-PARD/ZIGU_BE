@@ -1,6 +1,7 @@
 package com.pard.gz.zigu.post.controller;
 
 import com.pard.gz.zigu.config.security.CustomUserDetails;
+import com.pard.gz.zigu.post.dto.PostCreateResDto;
 import com.pard.gz.zigu.responseDto.ApiResponse;
 import com.pard.gz.zigu.post.dto.PostCreateReqDto;
 import com.pard.gz.zigu.post.dto.PostDetailResDto;
@@ -22,10 +23,10 @@ public class PostController {
 
     @Operation(summary = "게시글 생성", description = "유저 ID를 받고 새 게시글 생성띠띠.")
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Void>> create(@RequestParam Long userId, @ModelAttribute PostCreateReqDto postCreateReqDto)
+    public ResponseEntity<ApiResponse<PostCreateResDto>> create(@RequestParam Long userId, @ModelAttribute PostCreateReqDto postCreateReqDto)
             throws IOException {
-        postService.createPost(userId, postCreateReqDto);
-        return ResponseEntity.ok(new ApiResponse<>(200, true, "게시글 post 성공", null));
+        PostCreateResDto dto = postService.createPost(userId, postCreateReqDto);
+        return ResponseEntity.ok(ApiResponse.success(dto));
     }
 
     // 현재 유저가 속한 대학교의 모든 게시물 get

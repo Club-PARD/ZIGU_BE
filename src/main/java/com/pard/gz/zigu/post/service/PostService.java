@@ -3,10 +3,7 @@ package com.pard.gz.zigu.post.service;
 import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.Image.repository.ImageRepo;
 import com.pard.gz.zigu.Image.service.ImageStorageService;
-import com.pard.gz.zigu.post.dto.PostCreateReqDto;
-import com.pard.gz.zigu.post.dto.PostDetailResDto;
-import com.pard.gz.zigu.post.dto.PostHomeResDto;
-import com.pard.gz.zigu.post.dto.PostPreviewDto;
+import com.pard.gz.zigu.post.dto.*;
 import com.pard.gz.zigu.post.entity.Post;
 import com.pard.gz.zigu.post.repository.PostRepo;
 import com.pard.gz.zigu.school.entity.School;
@@ -42,7 +39,7 @@ public class PostService {
     private String bucket;
 
     @Transactional
-    public void createPost(Long userId, PostCreateReqDto dto) throws IOException {
+    public PostCreateResDto createPost(Long userId, PostCreateReqDto dto) throws IOException {
 
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -90,6 +87,10 @@ public class PostService {
 
         /* 4️⃣  저장 */
         postRepo.save(newPost);
+
+        return PostCreateResDto.builder()
+                .postId(newPost.getId())
+                .build();
     }
 
     // User 소속 학교의 모든 게시물(preview) 홈으로 불러오기
