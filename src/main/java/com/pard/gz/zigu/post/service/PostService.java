@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -145,11 +146,18 @@ public class PostService {
         Post currentPost = postRepo.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다"));
 
+
         User writer = currentPost.getWriter();  // 게시글 작성한 사용자
+        List<Image> images = currentPost.getImages();
+
+        List<String> imageUrls = images.stream()
+                .map(Image::getS3Key)
+                .collect(Collectors.toList());
+
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
                 .user_id(writer.getId())
                 .post_id(currentPost.getId())
-                .images(currentPost.getImages())
+                .imageUrls(imageUrls)
                 .price_per_day(currentPost.getPricePerDay())
                 .price_per_hour(currentPost.getPricePerHour())
                 .description(currentPost.getDescription())

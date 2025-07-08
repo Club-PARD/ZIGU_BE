@@ -54,6 +54,8 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
+
+
     // 카테고리
     @Column(name = "category")
     @Enumerated(EnumType.STRING)

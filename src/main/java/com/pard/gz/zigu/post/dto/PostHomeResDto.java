@@ -16,5 +16,6 @@ import java.util.List;
 public class PostHomeResDto { // 해당 학교의 모든 게시물
     private Long userId;
     private String schoolName;
+
     private List<PostPreviewDto> posts;
 }
