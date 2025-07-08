@@ -155,7 +155,7 @@ public class PostService {
                 .collect(Collectors.toList());
 
 
-        System.out.println("이미지 이름");
+
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
                 .user_id(writer.getId())
                 .post_id(currentPost.getId())
@@ -165,6 +165,10 @@ public class PostService {
                 .description(currentPost.getDescription())
                 .category(currentPost.getCategory())
                 .build();
+
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println("이미지 이름" + imageUrls);
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         return postDetailResDto;
     }
