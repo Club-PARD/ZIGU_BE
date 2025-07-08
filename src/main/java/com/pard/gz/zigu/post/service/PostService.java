@@ -73,7 +73,7 @@ public class PostService {
                     .bucket(bucket)
                     .key(key)
                     .contentType(mf.getContentType())
-//                    .acl(ObjectCannedACL.PUBLIC_READ)
+                    .withCannedAcl(CannedAccessControlList.PublicRead)
                     .build();
             s3.putObject(req, RequestBody.fromInputStream(mf.getInputStream(), mf.getSize()));
 
