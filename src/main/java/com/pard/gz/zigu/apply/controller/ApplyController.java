@@ -35,10 +35,9 @@ public class ApplyController {
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<ApplyListResDto>>> readMyApplyList(
             @AuthenticationPrincipal CustomUserDetails user) {
-
         User currentUser = user.getUser();
-        List<ApplyListResDto> dto = applyService.getMyApplyList(currentUser);
-        return ResponseEntity.ok(ApiResponse.success(dto));
+        List<ApplyListResDto> dtos = applyService.getMyApplyList(currentUser);
+        return ResponseEntity.ok(ApiResponse.success(dtos));
     }
 
     @Operation(summary = "신청 수락", description = "게시한 대여물품으로 온 신청 하나 수락")
