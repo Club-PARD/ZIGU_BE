@@ -157,4 +157,8 @@ public class PostService {
 
         return postDetailResDto;
     }
+
+    public void deletePost(Long postId){
+        postRepo.deleteById(postId);
+    }
 }

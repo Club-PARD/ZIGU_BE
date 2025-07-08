@@ -6,6 +6,7 @@ import com.pard.gz.zigu.post.entity.Post;
 import com.pard.gz.zigu.school.entity.School;
 import com.pard.gz.zigu.school.repository.SchoolRepo;
 import com.pard.gz.zigu.school.service.SchoolService;
+import com.pard.gz.zigu.user.dto.UserInfoResDto;
 import com.pard.gz.zigu.user.dto.UserSignUpReqDto;
 import com.pard.gz.zigu.user.entity.User;
 import com.pard.gz.zigu.user.repository.UserRepo;
@@ -79,6 +80,18 @@ public class UserService {
                 .toList();
 
         return postPreviewDtos; // list로 build후 return
+    }
+
+    public UserInfoResDto readUserInfo(User currentUser){
+        return UserInfoResDto.builder()
+                .nickname(currentUser.getNickname())
+                .schoolName(currentUser.getSchool().getSchoolName())
+                .studentMail(currentUser.getStudentMail())
+                .build();
+    }
+
+    public void deleteUser(User currentUser){
+        userRepo.deleteById(currentUser.getId());
     }
 
 }

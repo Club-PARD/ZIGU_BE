@@ -1,6 +1,7 @@
 package com.pard.gz.zigu.config.security;
 
 import com.pard.gz.zigu.config.security.CustomUserDetailsService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,13 +50,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                /* 1) CORS – 새 문법 */
                 .cors(Customizer.withDefaults())
 
-                /* 2) CSRF – 프론트가 SPA라면 끈다 */
                 .csrf(AbstractHttpConfigurer::disable)
 
-                /* 3) URL 권한 */
+                // URL 권한
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/**",
@@ -68,11 +67,20 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                /* 4) 폼 로그인(리다이렉트) 완전 OFF ─ 새 방식 */
                 .formLogin(FormLoginConfigurer::disable)
 
-                /* 5) HTTP Basic OFF ─ 새 방식 */
-                .httpBasic(AbstractHttpConfigurer::disable);
+                .httpBasic(AbstractHttpConfigurer::disable)
+                // 🔻로그아웃
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // POST /logout 으로 요청해야 함
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID") // 세션 쿠키 삭제
+                );
+
+
 
         return http.build();
     }

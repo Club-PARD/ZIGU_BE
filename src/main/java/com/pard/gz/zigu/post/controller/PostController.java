@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +46,12 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.success(detailResDto));
     }
 
+    @Operation(summary = "현재 게시글 삭제", description = "게시물 id 받고 그 게시물 삭제")
+    @DeleteMapping("/delete")
+    public ResponseEntity<ApiResponse<List<Void>>> deletePost(Long postId){
+        postService.deletePost(postId);
+        return ResponseEntity.ok(new ApiResponse<>(200, true, "게시글 삭제 성공", null));
+    }
 
 
 }
