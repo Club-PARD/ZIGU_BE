@@ -1,5 +1,6 @@
 package com.pard.gz.zigu.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pard.gz.zigu.apply.entity.Apply;
 import com.pard.gz.zigu.borrowed.entity.Borrowed;
 import com.pard.gz.zigu.post.entity.Post;
@@ -42,6 +43,7 @@ public class User {
     private String studentMail;
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     // 해당 user가 작성한 게시물
     private List<Post> postList = new ArrayList<>();
 
