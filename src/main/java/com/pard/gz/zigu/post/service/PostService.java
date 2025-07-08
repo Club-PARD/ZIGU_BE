@@ -140,6 +140,7 @@ public class PostService {
     }
 
     // 상세페이지
+    @Transactional(readOnly = true)
     public PostDetailResDto readDetailPost(Long postId){
 
         Post currentPost = postRepo.findById(postId)
@@ -153,6 +154,8 @@ public class PostService {
                 .map(image -> "https://gz-zigu.store/" + image.getS3Key())
                 .collect(Collectors.toList());
 
+
+        currentPost.getImages().size();
 
 
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
