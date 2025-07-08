@@ -23,6 +23,8 @@ public class ImageProxyController {
 
     @GetMapping("/image-proxy")
     public ResponseEntity<byte[]> proxyImage(@RequestParam String url) {
+        System.out.println("프론트에서 인코딩 된 URL: " + url);
+
         // 1. 디코딩
         String decodedUrl = URLDecoder.decode(url, StandardCharsets.UTF_8);
         System.out.println("디코딩된 URL: " + decodedUrl);
