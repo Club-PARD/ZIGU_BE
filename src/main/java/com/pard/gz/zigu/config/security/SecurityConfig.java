@@ -18,6 +18,8 @@ import org.springframework.security.config.annotation.web.configurers.FormLoginC
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class SecurityConfig {
                 .formLogin(FormLoginConfigurer::disable)
 
                 .httpBasic(AbstractHttpConfigurer::disable)
-                // 🔻로그아웃
+                // 로그아웃
                 .logout(logout -> logout
                         .logoutUrl("/logout") // POST /logout 으로 요청해야 함
                         .logoutSuccessHandler((request, response, authentication) -> {
@@ -103,6 +105,20 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowCredentials(true);
+            }
+        };
+    }
+
 
 }
 
