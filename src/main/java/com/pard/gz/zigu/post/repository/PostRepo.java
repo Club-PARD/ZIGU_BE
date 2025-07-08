@@ -12,4 +12,7 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     List<Post> findAllByWriter(User user);
     List<Post> findAllBySchool(School school);
 
+    List<Post> findByItemNameContaining(String keyword);
+
+
 }

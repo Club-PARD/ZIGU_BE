@@ -68,9 +68,10 @@ public class UserService {
                             .orElse(null);      // 비어 있으면 null
 
                     // 2) DTO 빌드
+                    assert firstImage != null;
                     return PostPreviewDto.builder()
                             .post_id(post.getId())
-                            .post_fir_Image(firstImage)
+                            .firstImageUrl(firstImage.getS3Key())
                             .itemName(post.getItemName())
                             .category(post.getCategory())
                             .price_per_hour(post.getPricePerHour())

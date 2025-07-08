@@ -1,11 +1,8 @@
 package com.pard.gz.zigu.post.controller;
 
 import com.pard.gz.zigu.config.security.CustomUserDetails;
-import com.pard.gz.zigu.post.dto.PostCreateResDto;
+import com.pard.gz.zigu.post.dto.*;
 import com.pard.gz.zigu.responseDto.ApiResponse;
-import com.pard.gz.zigu.post.dto.PostCreateReqDto;
-import com.pard.gz.zigu.post.dto.PostDetailResDto;
-import com.pard.gz.zigu.post.dto.PostHomeResDto;
 import com.pard.gz.zigu.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +49,13 @@ public class PostController {
         postService.deletePost(postId);
         return ResponseEntity.ok(new ApiResponse<>(200, true, "게시글 삭제 성공", null));
     }
+
+//    @GetMapping("/search")
+//    public ResponseEntity<ApiResponse<List<PostSearchResDto>>> searchPost(
+//            @RequestParam String keyword) {
+//        List<PostSearchResDto> result = postService.searchByItemName(keyword);
+//        return ResponseEntity.ok(ApiResponse.success(result));
+//    }
 
 
 }
