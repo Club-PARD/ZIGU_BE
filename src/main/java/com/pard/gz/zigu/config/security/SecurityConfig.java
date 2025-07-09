@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,7 +23,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 // 비밀번호 인코딩 설정파일(해싱)
@@ -36,7 +40,15 @@ public class SecurityConfig {
     /* 비밀번호 해싱 */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // 앞으로 새로 저장할 때는 bcrypt 쓰겠다는 뜻
+        String defaultId = "bcrypt";
+
+        Map<String, PasswordEncoder> encoders = new HashMap<>();
+        encoders.put("bcrypt", new BCryptPasswordEncoder());
+        encoders.put("noop", NoOpPasswordEncoder.getInstance()); // 평문 대응
+
+        // → {bcrypt}$2a...  또는 {noop}1111  둘 다 매칭 가능
+        return new DelegatingPasswordEncoder(defaultId, encoders);
     }
 
     /* AuthenticationManager – DB 조회 + 해시검증 */
