@@ -83,7 +83,9 @@ public class UserService {
         return postPreviewDtos; // list로 build후 return
     }
 
-    public UserInfoResDto readUserInfo(User currentUser){
+    public UserInfoResDto readUserInfo(Long userId){
+        User currentUser = userRepo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 user입니다"));
         return UserInfoResDto.builder()
                 .nickname(currentUser.getNickname())
                 .schoolName(currentUser.getSchool().getSchoolName())
