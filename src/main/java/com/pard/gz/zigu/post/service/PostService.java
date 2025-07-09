@@ -136,7 +136,6 @@ public class PostService {
                 })
                 .toList();
 
-
         PostHomeResDto postHomeResDto = PostHomeResDto.builder()
                 .userId(currentUser.getId())
                 .schoolName(schoolName)
@@ -188,7 +187,29 @@ public class PostService {
         postRepo.deleteById(postId);
     }
 
-//    public List<PostSearchResDto> searchByItemName(String keyword) {
-//
-//    }
+    public List<PostSearchResDto> searchByItemName(String keyword) {
+        List<Post> findedPosts = postRepo.findByItemNameContainingIgnoreCase(keyword);
+
+        List<PostSearchResDto> dtos = findedPosts.stream()
+                .map(findedPost -> {
+                    Image firstImage = findedPost.getImages()
+                            .stream()
+                            .findFirst()        // Optional<Image>
+                            .orElse(null);      // 비어 있으면 null
+
+                    String imageUrl = "https://gz-zigu.store/" + firstImage.getS3Key();
+                    // 2) DTO 빌드
+                    assert firstImage != null;
+                    return PostSearchResDto.builder()
+                            .post_id(findedPost.getId())
+                            .firstImageUrl(imageUrl)
+                            .itemName(findedPost.getItemName())
+                            .category(findedPost.getCategory())
+                            .price_per_hour(findedPost.getPricePerHour())
+                            .price_per_day(findedPost.getPricePerDay())
+                            .build();
+                }).toList();
+
+        return dtos;
+    }
 }

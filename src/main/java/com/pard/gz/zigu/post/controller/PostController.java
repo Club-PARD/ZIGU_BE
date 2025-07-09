@@ -50,12 +50,12 @@ public class PostController {
         return ResponseEntity.ok(new ApiResponse<>(200, true, "게시글 삭제 성공", null));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<ApiResponse<List<PostSearchResDto>>> searchPost(
-//            @RequestParam String keyword) {
-//        List<PostSearchResDto> result = postService.searchByItemName(keyword);
-//        return ResponseEntity.ok(ApiResponse.success(result));
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<List<PostSearchResDto>>> searchPost(
+            @RequestParam String keyword) {
+        List<PostSearchResDto> result = postService.searchByItemName(keyword);
+        return ResponseEntity.ok(ApiResponse.success(result));
+    }
 
 
 }

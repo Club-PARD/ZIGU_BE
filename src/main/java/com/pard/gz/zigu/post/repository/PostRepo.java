@@ -12,7 +12,8 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     List<Post> findAllByWriter(User user);
     List<Post> findAllBySchool(School school);
 
-    List<Post> findByItemNameContaining(String keyword);
+    List<Post> findByItemNameContainingIgnoreCase(String keyword); // 대소문자 구분 X
+//    List<Post> findByItemNameContaining(String keyword); // 대소문자 구분 O
 
 
 }
