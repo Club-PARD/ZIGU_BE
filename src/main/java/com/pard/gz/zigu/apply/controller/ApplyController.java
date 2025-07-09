@@ -25,6 +25,9 @@ public class ApplyController {
     @Operation(summary = "신청서 (작성 후)저장", description = "유저가 빌리고 싶은 물품의 대여 신청서 저장")
     @PostMapping("/save")
     public ResponseEntity<ApiResponse<Void>> saveApply(@RequestBody ApplySaveReqDto applySaveReqDto){
+        System.out.println();
+        System.out.println("기간 : " + applySaveReqDto.getPeroid() +" "+applySaveReqDto.getUnitOfPeroid());
+        System.out.println();
         // service
         applyService.createApply(applySaveReqDto);
         return ResponseEntity.ok(new ApiResponse<>(200, true, "신청서 저장 성공", null));

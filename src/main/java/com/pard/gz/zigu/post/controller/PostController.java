@@ -50,6 +50,7 @@ public class PostController {
         return ResponseEntity.ok(new ApiResponse<>(200, true, "게시글 삭제 성공", null));
     }
 
+    @Operation(summary = "게시물 검색", description = "키워드(ex. 충전기, 캐리어)로 물품 게시물 검색")
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<List<PostSearchResDto>>> searchPost(
             @RequestParam String keyword) {
