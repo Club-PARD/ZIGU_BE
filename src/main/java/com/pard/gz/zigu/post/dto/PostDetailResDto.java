@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PostDetailResDto {
     private Long user_id;
+    private String nickname;
     private Long post_id;
     private List<String> imageUrls = new ArrayList<>();
     private Long price_per_hour;
