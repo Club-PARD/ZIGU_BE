@@ -66,8 +66,15 @@ public class PostService {
         for (MultipartFile mf : files) {
             if (mf.isEmpty()) continue;
 
+            String originalFilename = mf.getOriginalFilename(); // "귀여운 고양이.jpg"
+            String sanitized = originalFilename.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
             // S3 key – Post ID 안 쓰고 UUID/타임스탬프 등으로 폴더 구성
-            String key = "posts/" + UUID.randomUUID() + "_" + mf.getOriginalFilename();
+            String key = "posts/" + UUID.randomUUID() + "_" + sanitized;
+
+            System.out.println("원래 파일 이름 : " + originalFilename);
+            System.out.println("변경된 파일 이름 : " + sanitized);
+            System.out.println("최종 파일 이름 : " + key);
+
 
             PutObjectRequest req = PutObjectRequest.builder()
                     .bucket(bucket)
