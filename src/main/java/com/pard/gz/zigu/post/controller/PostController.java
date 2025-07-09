@@ -45,7 +45,7 @@ public class PostController {
 
     @Operation(summary = "현재 게시글 삭제", description = "게시물 id 받고 그 게시물 삭제")
     @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse<List<Void>>> deletePost(Long postId){
+    public ResponseEntity<ApiResponse<List<Void>>> deletePost(@RequestParam Long postId){
         System.out.println("받은 postId : "+postId);
         postService.deletePost(postId);
         return ResponseEntity.ok(new ApiResponse<>(200, true, "게시글 삭제 성공", null));
