@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     public UserSucInfoResDto login(LoginReqDto loginReqDto, HttpServletRequest request) {
         try {
