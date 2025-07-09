@@ -17,6 +17,7 @@ import java.util.List;
 public class PostDetailResDto {
     private Long user_id;
     private String nickname;
+    private String itemName;
     private Long post_id;
     private List<String> imageUrls = new ArrayList<>();
     private Long price_per_hour;

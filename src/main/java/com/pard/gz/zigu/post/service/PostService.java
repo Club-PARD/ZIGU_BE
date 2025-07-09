@@ -168,6 +168,7 @@ public class PostService {
         PostDetailResDto postDetailResDto = PostDetailResDto.builder()
                 .user_id(writer.getId())
                 .nickname(writer.getNickname())
+                .itemName(currentPost.getItemName())
                 .post_id(currentPost.getId())
                 .imageUrls(imageUrls)
                 .price_per_day(currentPost.getPricePerDay())

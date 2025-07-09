@@ -44,10 +44,6 @@ public class Borrowed {
     @Enumerated(EnumType.STRING)
     private BorrowStatus borrowStatus;
 
-    public void updateToBORROWED() {
-        this.borrowStatus = BorrowStatus.BORROWED;
-    }
-
     public void updateToRETURN() {
         this.borrowStatus = BorrowStatus.RETURNED;
     }

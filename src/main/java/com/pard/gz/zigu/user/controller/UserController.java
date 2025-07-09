@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @Operation(summary = "회원 탈퇴", description = "현재 로그인 한 user 탈퇴 ㄹㅊㄱㄹ")
-    @DeleteMapping("/user")
+    @DeleteMapping("/quit")
     public ResponseEntity<ApiResponse<List<Void>>> deleteUser(@AuthenticationPrincipal CustomUserDetails userDetails,
                                            HttpServletRequest request) {
         User currentUser = userDetails.getUser();
