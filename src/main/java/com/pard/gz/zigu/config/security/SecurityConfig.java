@@ -53,9 +53,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
-
                 .csrf(AbstractHttpConfigurer::disable)
-
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin()) // 또는 .disable()
+                )
                 // URL 권한
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
