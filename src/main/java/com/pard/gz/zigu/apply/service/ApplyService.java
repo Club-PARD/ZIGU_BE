@@ -96,6 +96,9 @@ public class ApplyService {
         currentPost.updateImpossible();
         postRepo.save(currentPost);
 
+        System.out.println();
+        System.out.println("borrower : "+ apply.getApplier().getNickname() + " - " + apply.getApplier().getId());
+        System.out.println();
         // 대여 내역 생성
         Borrowed newBorrowed = Borrowed.builder()
                 .post(currentPost)
@@ -105,6 +108,7 @@ public class ApplyService {
                 .price(apply.getTotalPrice())
                 .borrowStatus(BorrowStatus.BORROWED) // 대여 중으로 상태 설정
                 .build();
+
         borrowedRepo.save(newBorrowed);
 
         // 수락 후 대여 내역으로 저장했으니 신청서는 삭제
