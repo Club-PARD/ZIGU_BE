@@ -47,6 +47,7 @@ public class ApplyService {
                 .unitOfPeroid(dto.getUnitOfPeroid())
                 .peroid(dto.getPeroid())
                 .totalPrice(dto.getTotalPrice())
+                .applyStatus(ApplyStatus.WAITING)
                 .build();
 
         // 리포에 저장
