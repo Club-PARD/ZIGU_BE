@@ -78,7 +78,7 @@ public class BorrowedService {
                 ).toList(); // flatMap으로 전체 Borrowed들을 하나의 List로 합쳐버ㄹ릠
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void returnCompleted(Long borrowedId){
         Borrowed borrowed = borrRepo.findById(borrowedId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 대여내역입니다"));
