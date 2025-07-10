@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ApplyRepo extends JpaRepository<Apply, Long> {
-
+    List<Apply> findByApplierId(Long applierId);
     List<Apply> findByPost(Post post);
 
 }

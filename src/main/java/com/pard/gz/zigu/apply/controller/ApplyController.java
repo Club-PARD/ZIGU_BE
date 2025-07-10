@@ -2,6 +2,7 @@ package com.pard.gz.zigu.apply.controller;
 
 import com.pard.gz.zigu.apply.dto.ApplyListResDto;
 import com.pard.gz.zigu.apply.dto.ApplySaveReqDto;
+import com.pard.gz.zigu.apply.dto.MyApplyResDto;
 import com.pard.gz.zigu.apply.repository.ApplyRepo;
 import com.pard.gz.zigu.apply.service.ApplyService;
 import com.pard.gz.zigu.config.security.CustomUserDetails;
@@ -33,8 +34,16 @@ public class ApplyController {
         return ResponseEntity.ok(new ApiResponse<>(200, true, "신청서 저장 성공", null));
     }
 
+    @Operation(summary = "요청한 신청 조회", description = "본인이 요청한 신청 상태 조회")
+    @GetMapping("/myApplies")
+    public ResponseEntity<ApiResponse<List<MyApplyResDto>>> readApplierList(
+            @AuthenticationPrincipal CustomUserDetails user) {
+        User currentUser = user.getUser();
+        List<MyApplyResDto> dtos = applyService.getApplierList(currentUser);
+        return ResponseEntity.ok(ApiResponse.success(dtos));
+    }
 
-    @Operation(summary = "신청서 조회(신청 내역 조회)", description = "게시한 대여물품으로 온 신청 내역 조회")
+    @Operation(summary = "본인에게 온 신청자 조회(신청 내역 조회)", description = "게시한 대여물품으로 온 신청 내역 조회")
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<ApplyListResDto>>> readMyApplyList(
             @AuthenticationPrincipal CustomUserDetails user) {

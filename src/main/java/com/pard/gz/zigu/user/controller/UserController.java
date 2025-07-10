@@ -36,7 +36,8 @@ public class UserController {
     @Operation(summary = "내 프로필 조회", description = "현재 로그인 한 user의 프로필 정보 조회")
     @GetMapping("/info")
     public ResponseEntity<ApiResponse<UserInfoResDto>> readUserInfo(
-            @RequestParam Long userId){
+            @AuthenticationPrincipal CustomUserDetails user){
+        Long userId = user.getUser().getId();
         UserInfoResDto dto = userService.readUserInfo(userId);
         return ResponseEntity.ok(ApiResponse.success(dto));
     }

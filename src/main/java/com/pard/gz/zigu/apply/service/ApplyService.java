@@ -4,7 +4,9 @@ import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.Image.repository.ImageRepo;
 import com.pard.gz.zigu.apply.dto.ApplyListResDto;
 import com.pard.gz.zigu.apply.dto.ApplySaveReqDto;
+import com.pard.gz.zigu.apply.dto.MyApplyResDto;
 import com.pard.gz.zigu.apply.entity.Apply;
+import com.pard.gz.zigu.apply.entity.enums.ApplyStatus;
 import com.pard.gz.zigu.apply.repository.ApplyRepo;
 import com.pard.gz.zigu.borrowed.entity.Borrowed;
 import com.pard.gz.zigu.borrowed.entity.enums.BorrowStatus;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -52,8 +53,30 @@ public class ApplyService {
         applyRepo.save(newApply);
     }
 
-//    @Transactional
-//    public List<Ap>
+    @Transactional
+    public List<MyApplyResDto> getApplierList(User applier){
+        Long applierId = applier.getId();
+        List<Apply> applies = applyRepo.findByApplierId(applierId);
+
+        List<MyApplyResDto> dtos = applies.stream().map(
+                apply -> {
+                    Post post = apply.getPost();
+                    List<Image> imageList = imageRepo.findByPost(post);     // 3. 해당 글의 이미지 리스트
+
+                    String firstUrl = imageList.isEmpty() ? null : imageList.get(0).getS3Key();
+                    String imageUrl = "https://gz-zigu.store/" + firstUrl;
+
+                    return MyApplyResDto.builder()
+                            .postId(post.getId())
+                            .firstImageUrl(imageUrl)
+                            .unitOfPeroid(apply.getUnitOfPeroid())
+                            .peroid(apply.getPeroid())
+                            .totalPrice(apply.getTotalPrice())
+                            .applyStatus(ApplyStatus.WAITING)
+                            .build();
+                }).toList();
+        return dtos;
+    }
 
     @Transactional(readOnly = true)
     public List<ApplyListResDto> getMyApplyList(User user) {

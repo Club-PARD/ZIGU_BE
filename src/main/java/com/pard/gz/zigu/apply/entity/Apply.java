@@ -1,5 +1,6 @@
 package com.pard.gz.zigu.apply.entity;
 
+import com.pard.gz.zigu.apply.entity.enums.ApplyStatus;
 import com.pard.gz.zigu.borrowed.entity.enums.UnitOfPeroid;
 import com.pard.gz.zigu.post.entity.Post;
 import com.pard.gz.zigu.user.entity.User;
@@ -40,4 +41,7 @@ public class Apply { // 신청서
 
     @Column(name = "totalPrice")
     private Long totalPrice;
+
+    @Column(name = "applyStatus")
+    private ApplyStatus applyStatus;
 }

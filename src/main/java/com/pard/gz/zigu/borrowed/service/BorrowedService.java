@@ -37,6 +37,7 @@ public class BorrowedService {
             String imageUrl = "https://gz-zigu.store/" + firstImageUrl;
 
             return BorrInfoResDto.builder()
+                    .postId(post.getId())
                     .borrowedId(borrowed.getId())
                     .firstImageUrl(imageUrl)
                     .itemName(post.getItemName())
@@ -64,6 +65,7 @@ public class BorrowedService {
 
 
                             return BorrInfoResDto.builder()
+                                    .postId(post.getId())
                                     .borrowedId(borrowed.getId())
                                     .firstImageUrl(imageUrl)
                                     .itemName(post.getItemName())

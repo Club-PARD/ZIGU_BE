@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BorrInfoResDto { // 빌린 내역
+    private Long postId;
     private Long borrowedId; // 대여 내역의 ID
     private String firstImageUrl; // 첫번째 사진
     private String itemName; // post 제목
