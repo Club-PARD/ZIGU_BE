@@ -88,6 +88,11 @@ public class BorrowedService {
         Post post = borrowed.getPost();
         post.updatePossible();
         postRepo.save(post);
+
+        System.out.println();
+        System.out.println("바뀐 대여 상태: "+borrowed.getBorrowStatus());
+        System.out.println("반납 완료 후 해당 게시물의 상태: "+post.getIsBorrowable());
+        System.out.println();
     }
 
 
