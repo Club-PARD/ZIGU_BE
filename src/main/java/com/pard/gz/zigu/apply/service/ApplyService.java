@@ -52,6 +52,9 @@ public class ApplyService {
         applyRepo.save(newApply);
     }
 
+//    @Transactional
+//    public List<Ap>
+
     @Transactional(readOnly = true)
     public List<ApplyListResDto> getMyApplyList(User user) {
 
