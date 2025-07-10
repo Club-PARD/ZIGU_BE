@@ -66,6 +66,7 @@ public class ApplyService {
 
             List<ApplyListResDto.ApplyInfo> applyInfoList = applyList.stream()
                     .map(apply -> ApplyListResDto.ApplyInfo.builder()
+                            .applyId(apply.getId())
                             .applierNickname(apply.getApplier().getNickname())
                             .firstImageUrl(imageUrl)
                             .period(apply.getPeroid())

@@ -23,6 +23,7 @@ public class ApplyListResDto {
     @Getter
     @Builder
     public static class ApplyInfo {
+        private Long applyId;               // 신청서 id
         private String applierNickname;     // 신청자 닉네임
         private String firstImageUrl;       // 게시물 첫 번째 이미지(없으면 null)
         private Long period;                // 신청 기간
