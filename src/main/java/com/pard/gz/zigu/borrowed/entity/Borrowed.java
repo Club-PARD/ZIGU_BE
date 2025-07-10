@@ -25,7 +25,7 @@ public class Borrowed {
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "borrowed_id")
+    @JoinColumn(name = "borrower_id")
     private User borrower;
 
     // + 기간

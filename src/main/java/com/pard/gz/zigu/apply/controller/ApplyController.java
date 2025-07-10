@@ -45,14 +45,14 @@ public class ApplyController {
 
     @Operation(summary = "신청 수락", description = "게시한 대여물품으로 온 신청 하나 수락")
     @DeleteMapping("/ok")
-    public ResponseEntity<ApiResponse<List<Void>>> acceptApply(Long applyId){
+    public ResponseEntity<ApiResponse<List<Void>>> acceptApply(@RequestParam Long applyId){
         applyService.acceptApply(applyId);
         return ResponseEntity.ok(new ApiResponse<>(200, true, "신청 수락 성공", null));
     }
 
     @Operation(summary = "신청 거절", description = "게시한 대여물품으로 온 신청 거절")
     @DeleteMapping("/no")
-    public ResponseEntity<ApiResponse<List<Void>>> rejectApply(Long applyId){
+    public ResponseEntity<ApiResponse<List<Void>>> rejectApply(@RequestParam Long applyId){
         applyService.rejectApply(applyId);
         return ResponseEntity.ok(new ApiResponse<>(200, true, "신청 거절 성공", null));
     }

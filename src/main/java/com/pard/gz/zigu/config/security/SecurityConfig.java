@@ -45,7 +45,7 @@ public class SecurityConfig {
 
         Map<String, PasswordEncoder> encoders = new HashMap<>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
-        encoders.put("noop", NoOpPasswordEncoder.getInstance()); // 평문 대응
+        encoders.put("noop", NoOpPasswordEncoder.getInstance());
 
         // → {bcrypt}$2a...  또는 {noop}1111  둘 다 매칭 가능
         return new DelegatingPasswordEncoder(defaultId, encoders);
