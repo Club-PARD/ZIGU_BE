@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MyApplyResDto {
     private Long postId;
+    private String itemName;
     private String firstImageUrl;
     private UnitOfPeroid unitOfPeroid;
     private Long peroid;

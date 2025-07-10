@@ -55,6 +55,7 @@ public class ApplyService {
         applyRepo.save(newApply);
     }
 
+    // 내가 작성한 신청서(대여요청서) 조회
     @Transactional
     public List<MyApplyResDto> getApplierList(User applier){
         Long applierId = applier.getId();
@@ -70,6 +71,7 @@ public class ApplyService {
 
                     return MyApplyResDto.builder()
                             .postId(post.getId())
+                            .itemName(post.getItemName())
                             .firstImageUrl(imageUrl)
                             .unitOfPeroid(apply.getUnitOfPeroid())
                             .peroid(apply.getPeroid())
