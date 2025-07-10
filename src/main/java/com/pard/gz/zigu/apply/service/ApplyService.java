@@ -36,7 +36,9 @@ public class ApplyService {
         Post currentPost = postRepo.findById(dto.getPostId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다"));
 
-        User applier = currentPost.getWriter();
+
+        User applier = userRepo.findById(dto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 user입니다"));
 
         Apply newApply = Apply.builder()
                 .post(currentPost)
