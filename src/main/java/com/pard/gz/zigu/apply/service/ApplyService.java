@@ -50,6 +50,7 @@ public class ApplyService {
                 .applyStatus(ApplyStatus.WAITING)
                 .build();
 
+        System.out.println("신청상태 : "+ newApply.getApplyStatus());
         // 리포에 저장
         applyRepo.save(newApply);
     }

@@ -43,5 +43,6 @@ public class Apply { // 신청서
     private Long totalPrice;
 
     @Column(name = "applyStatus")
+    @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 }
