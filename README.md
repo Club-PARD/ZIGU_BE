@@ -85,7 +85,7 @@
       <p style="color:#555;">PM</p>
     </td>
     <td align="center">
-      <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/contributor/ZIGU_team_sumin.jpeg" width="120" style="border-radius:15px; margin-bottom:10px;" alt="이수민">
+      <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/contributor/ZIGU_team_sumin.png" width="120" style="border-radius:15px; margin-bottom:10px;" alt="이수민">
       <h3 style="font-size:1.3rem;">이수민</h3>
       <p style="color:#555;">디자인</p>
     </td>
