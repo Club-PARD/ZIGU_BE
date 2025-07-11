@@ -71,6 +71,7 @@ public class UserService {
                     assert firstImage != null;
                     return PostPreviewDto.builder()
                             .post_id(post.getId())
+                            .isBorrowable(post.getIsBorrowable())
                             .firstImageUrl(firstImage.getS3Key())
                             .itemName(post.getItemName())
                             .category(post.getCategory())

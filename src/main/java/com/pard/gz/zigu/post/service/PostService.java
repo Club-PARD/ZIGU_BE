@@ -127,6 +127,7 @@ public class PostService {
                     assert firstImage != null;
                     return PostPreviewDto.builder()
                             .post_id(post.getId())
+                            .isBorrowable(post.getIsBorrowable())
                             .firstImageUrl(imageUrl)
                             .itemName(post.getItemName())
                             .category(post.getCategory())
@@ -169,6 +170,7 @@ public class PostService {
                 .nickname(writer.getNickname())
                 .itemName(currentPost.getItemName())
                 .post_id(currentPost.getId())
+                .isBorrowable(currentPost.getIsBorrowable())
                 .imageUrls(imageUrls)
                 .price_per_day(currentPost.getPricePerDay())
                 .price_per_hour(currentPost.getPricePerHour())
