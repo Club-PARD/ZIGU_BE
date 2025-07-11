@@ -49,12 +49,12 @@ public class Post {
     @Column(name = "item_name", nullable = false)
     private String itemName;
 
+    public void updateItemName(String newItemName){ this.itemName = newItemName; }
+
     // 해당 물품의 이미지
     // 🔽 Post 입장에서: 이미지들을 가지고 있음 (1:N)
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
-
-
 
     // 카테고리
     @Column(name = "category")
@@ -65,13 +65,19 @@ public class Post {
     @Column(name = "price_per_hour")
     private Long pricePerHour;
 
+    public void updatePricePerHour(Long newHPrice){ this.pricePerHour = newHPrice; }
+
     // 하루 당 가격(일일 가격)
     @Column(name = "price_per_day")
     private Long pricePerDay;
 
+    public void updatePricePerDay(Long newDPrice){ this.pricePerDay = newDPrice; }
+
     // 상세 설명
     @Column(name = "description")
     private String description;
+
+    public void updateDescription(String newDescription){ this.description = newDescription; }
 
     // 어떤 학교의 게시물인지
     @ManyToOne

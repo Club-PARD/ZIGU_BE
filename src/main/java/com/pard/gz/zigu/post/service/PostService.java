@@ -214,4 +214,24 @@ public class PostService {
 
         return dtos;
     }
+
+    public PostUpdateResDto updatePost(PostUpdateReqDto dto){
+        Post currentPost = postRepo.findById(dto.getPostId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다"));
+
+        // itemName 변경
+        currentPost.updateItemName(dto.getItemName());
+        // 시간 당 가격 변경
+        currentPost.updatePricePerHour(dto.getPricePerHour());
+        // 일일 가격 변경
+        currentPost.updatePricePerDay(dto.getPricePerDay());
+        // 상세 설명 변경
+        currentPost.updateDescription(dto.getDescription());
+
+        postRepo.save(currentPost);
+
+        return PostUpdateResDto.builder()
+                .postId(currentPost.getId())
+                .build();
+    }
 }

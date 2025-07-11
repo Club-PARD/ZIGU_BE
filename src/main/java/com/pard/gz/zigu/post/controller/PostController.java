@@ -59,5 +59,9 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.success(result));
     }
 
-
+    @PatchMapping("/update")
+    public ResponseEntity<ApiResponse<PostUpdateResDto>> updatePost(@RequestBody PostUpdateReqDto postUpdateReqDto){
+        PostUpdateResDto postUpdateResDto = postService.updatePost(postUpdateReqDto);
+        return ResponseEntity.ok(ApiResponse.success(postUpdateResDto));
+    }
 }
