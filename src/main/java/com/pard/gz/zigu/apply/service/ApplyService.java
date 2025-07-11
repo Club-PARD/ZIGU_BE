@@ -4,6 +4,7 @@ import com.pard.gz.zigu.Image.entity.Image;
 import com.pard.gz.zigu.Image.repository.ImageRepo;
 import com.pard.gz.zigu.apply.dto.ApplyListResDto;
 import com.pard.gz.zigu.apply.dto.ApplySaveReqDto;
+import com.pard.gz.zigu.apply.dto.ApplyierEmailDto;
 import com.pard.gz.zigu.apply.dto.MyApplyResDto;
 import com.pard.gz.zigu.apply.entity.Apply;
 import com.pard.gz.zigu.apply.entity.enums.ApplyStatus;
@@ -117,10 +118,12 @@ public class ApplyService {
     }
 
 
-    public void acceptApply(Long applierId){
+    public ApplyierEmailDto acceptApply(Long applierId){
         Apply apply = applyRepo.findById(applierId)
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 신청내역입니다"));
 
+        User applier = userRepo.findById(applierId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 user입니다"));
         // 해당 물품의 대여상태 상태 변경(가능 -> 불가능)
         Post currentPost = apply.getPost();
         currentPost.updateImpossible();
@@ -140,9 +143,11 @@ public class ApplyService {
                 .build();
 
         borrowedRepo.save(newBorrowed);
-
         // 수락 후 대여 내역으로 저장했으니 신청서는 삭제
         applyRepo.delete(apply);
+         return ApplyierEmailDto.builder()
+                 .studentMail(applier.getStudentMail())
+                 .build();
     }
 
     public void rejectApply(Long applyId){
