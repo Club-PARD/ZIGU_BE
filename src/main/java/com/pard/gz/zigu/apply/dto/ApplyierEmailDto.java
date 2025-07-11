@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ApplyierEmailDto {
+    private Long applierId;
     private String studentMail;
+    private String nickName;
+    private String itemName;
 }

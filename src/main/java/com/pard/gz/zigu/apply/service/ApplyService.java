@@ -100,6 +100,7 @@ public class ApplyService {
             List<ApplyListResDto.ApplyInfo> applyInfoList = applyList.stream()
                     .map(apply -> ApplyListResDto.ApplyInfo.builder()
                             .applyId(apply.getId())
+                            .applierId(apply.getApplier().getId())
                             .applierNickname(apply.getApplier().getNickname())
                             .firstImageUrl(imageUrl)
                             .period(apply.getPeroid())
@@ -121,7 +122,6 @@ public class ApplyService {
     public ApplyierEmailDto acceptApply(Long applierId){
         Apply apply = applyRepo.findById(applierId)
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 신청내역입니다"));
-
         User applier = userRepo.findById(applierId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 user입니다"));
         // 해당 물품의 대여상태 상태 변경(가능 -> 불가능)
@@ -145,8 +145,14 @@ public class ApplyService {
         borrowedRepo.save(newBorrowed);
         // 수락 후 대여 내역으로 저장했으니 신청서는 삭제
         applyRepo.delete(apply);
+
+        System.out.println("신청자:"+applier.getNickname()+"("+applierId+")");
+        System.out.println("빌린 물품 : "+currentPost.getItemName());
          return ApplyierEmailDto.builder()
+                 .applierId(applierId)
                  .studentMail(applier.getStudentMail())
+                 .nickName(applier.getNickname())
+                 .itemName(currentPost.getItemName())
                  .build();
     }
 
