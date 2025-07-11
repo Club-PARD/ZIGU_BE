@@ -144,7 +144,7 @@
 |------|--------|
 | login | <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/API_login.png" width="900"/> |
 | user | <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/API_user.png" width="900"/> |
-| post | <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/API_post.png" width="900"/> |
+| post | <img src="" width="900"/> |
 | apply | <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/API_apply.png" width="900"/> |
 | borrowed | <img src="https://github.com/Club-PARD/ZIGU_BE/blob/main/images_for_md/API_borrowed.png" width="900"/> |
 
