@@ -59,6 +59,7 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.success(result));
     }
 
+    @Operation(summary = "게시물 수정", description = "나한테 parameter로 주는 postId는 현재 수정될 게시물의 id!")
     @PatchMapping("/update")
     public ResponseEntity<ApiResponse<PostUpdateResDto>> updatePost(@RequestBody PostUpdateReqDto postUpdateReqDto){
         PostUpdateResDto postUpdateResDto = postService.updatePost(postUpdateReqDto);
