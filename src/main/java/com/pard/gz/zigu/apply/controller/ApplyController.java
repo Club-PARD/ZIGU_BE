@@ -1,9 +1,6 @@
 package com.pard.gz.zigu.apply.controller;
 
-import com.pard.gz.zigu.apply.dto.ApplyListResDto;
-import com.pard.gz.zigu.apply.dto.ApplySaveReqDto;
-import com.pard.gz.zigu.apply.dto.ApplyierEmailDto;
-import com.pard.gz.zigu.apply.dto.MyApplyResDto;
+import com.pard.gz.zigu.apply.dto.*;
 import com.pard.gz.zigu.apply.repository.ApplyRepo;
 import com.pard.gz.zigu.apply.service.ApplyService;
 import com.pard.gz.zigu.config.security.CustomUserDetails;
@@ -55,8 +52,8 @@ public class ApplyController {
 
     @Operation(summary = "신청 수락", description = "게시한 대여물품으로 온 신청 하나 수락")
     @DeleteMapping("/ok")
-    public ResponseEntity<ApiResponse<ApplyierEmailDto>> acceptApply(@RequestParam Long applyId){
-        ApplyierEmailDto dtos = applyService.acceptApply(applyId);
+    public ResponseEntity<ApiResponse<ApplyierEmailDto>> acceptApply(@RequestBody ApplyOkReqDto dto){
+        ApplyierEmailDto dtos = applyService.acceptApply(dto);
         return ResponseEntity.ok(ApiResponse.success(dtos));
     }
 
